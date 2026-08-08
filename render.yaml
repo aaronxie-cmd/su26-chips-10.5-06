@@ -1,5 +1,5 @@
 databases:
-  - name: actionmap-db-xx
+  - name: actionmap-db-06
     databaseName: actionmap
     user: actionmap
     plan: free
