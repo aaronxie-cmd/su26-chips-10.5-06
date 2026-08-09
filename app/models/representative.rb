@@ -47,9 +47,8 @@ class Representative < ApplicationRecord
   end
 
   def self.find_rep(official, title: '', ocdid: '')
-    rep = Representative.create({ name: official['name'], ocdid: ocdid,
-      title: title, party: official['party'], photo_url: official['photo_url'] })
-    rep.save
+    rep = Representative.find_or_initialize_by(ocdid: ocdid, title: title)
+    rep.update_from_geocodio(official)
   end
 
   def update_from_geocodio(official)

@@ -25,3 +25,30 @@ require 'rails_helper'
 
 # RSpec.describe Representative do
 # end
+
+RSpec.describe Representative, type: :model do
+  describe '.find_rep' do
+    let(:sample_official) do
+      {
+        'name' => 'Jane Doe',
+        'type' => 'representative',
+        'govtrack_id' => '412345',
+        'party' => 'Democrat',
+        'photo_url' => 'https://example.com/photo.jpg'
+      }
+    end
+
+    it 'does not create duplicate representatives when called multiple times for the same person' do
+      # First call / creation
+      rep1 = Representative.find_rep(sample_official, title: 'representative', ocdid: '412345')
+      expect(Representative.count).to eq(1)
+
+      # Second call with the same unique identifiers
+      rep2 = Representative.find_rep(sample_official, title: 'representative', ocdid: '412345')
+      
+      # Assertions: Count should remain 1 and it should be the exact same database record ID
+      expect(Representative.count).to eq(1)
+      expect(rep1.id).to eq(rep2.id)
+    end
+  end
+end
