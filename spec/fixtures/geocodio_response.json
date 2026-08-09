@@ -1,0 +1,72 @@
+{
+  "results": [
+    {
+      "input": {
+        "address": {
+          "street": "1600 Pennsylvania Ave NW",
+          "city": "Washington",
+          "state": "DC",
+          "zip": "20500"
+        }
+      },
+      "results": [
+        {
+          "address": "1600 Pennsylvania Ave NW, Washington, DC 20500",
+          "location": {
+            "lat": 38.8977,
+            "lng": -77.0365
+          },
+          "accuracy": 1,
+          "fields": {
+            "congressional_districts": [
+              {
+                "name": "District of Columbia's At-Large congressional district",
+                "code": "11",
+                "states": [
+                  "DC"
+                ],
+                "current_legislators": [
+                  {
+                    "type": "representative",
+                    "bio": {
+                      "first_name": "pikachu",
+                      "last_name": "pika pika",
+                      "party": "pokemon",
+                      "gender": "C"
+                    },
+                    "contact": {
+                      "address": "2131 Pika House Office Building, Washington, DC 20515",
+                      "phone": "202-225-8050",
+                      "fax": "202-225-3002",
+                      "url": "https://pika.house.gov",
+                      "contact_form": "https://pika.house.gov/contact"
+                    },
+                    "social": {
+                      "twitter": "EleanorNorton",
+                      "facebook": "electnorton",
+                      "youtube": "electnorton"
+                    },
+                    "references": {
+                      "bioguide_id": "N000147",
+                      "thomas_id": "00868",
+                      "lis_id": null,
+                      "fec": [
+                        "H2DC00064"
+                      ],
+                      "cspan": 1025,
+                      "govtrack": 400291,
+                      "opensecrets": "N00001654",
+                      "votesmart": 578,
+                      "wikidata": "Q468635",
+                      "google_entity_id": "kg:/m/024s_2"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
