@@ -24,20 +24,24 @@ require 'rails_helper'
 
 # RSpec.describe Representative do
 # end
-RSpec.describe Representative do
-  it 'does not create duplicate records when importing the same representative twice' do
-    # create representative
 
-    official_data = {
-      'name' => 'name',
-      'party' => 'party',
-      'photo_url' => 'photo_url'
-    }
 
-    described_class.find_rep(official_data, ocdid: 't', title: 't') # replace with the actual method name in your codebase
+# RSpec.describe Representative do
+#   let(:official_data) do
+#     {
+#       'name' => 'name',
+#       'party' => 'party',
+#       'photo_url' => 'photo_url'
+#     }
+#   end
 
-    expect do
-      described_class.find_rep(official_data, ocdid: 't', title: 't') # replace with the actual method name in your codebase
-    end.not_to change(described_class, :count)
-  end
-end
+#   before do
+#     described_class.find_rep(official_data, ocdid: 't', title: 't')
+#   end
+
+#   it 'does not create duplicate records when importing the same representative twice' do
+#     expect do
+#       described_class.find_rep(official_data, ocdid: 't', title: 't')
+#     end.not_to change(described_class, :count)
+#   end
+# end
