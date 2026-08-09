@@ -68,6 +68,9 @@ gem 'date_validator'
 gem 'tzinfo-data', platforms: %i[windows]
 
 group :development, :test do
+
+  gem 'webmock'
+  
   # Call 'debugger' anywhere in the code to stop execution and get a debugger console
   gem 'debug'
 

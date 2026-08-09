@@ -63,9 +63,11 @@ export const setupEventHandlers = (stateMap) => {
     return `${county}, ${stateMap.state.symbol}`;
   };
   const clickCallback = (elem) => {
-    const county = elem.attr('data-county-name');
-    const query = encodeURIComponent(`${county}, ${stateMap.state.symbol}`);
-    window.location.href = `/search/${query}`;
+    // const county = elem.attr('data-county-name');
+    // const query = encodeURIComponent(`${county}, ${stateMap.state.symbol}`);
+    // window.location.href = `/search/${query}`;
+    const countyFipsCode = elem.attr('data-county-fips-code');
+    window.location.href = `/state/${stateMap.state.symbol}/county/${countyFipsCode}`;
   };
   mapUtils.handleMapMouseEvents(targets, hoverHtmlProvider, clickCallback);
 };

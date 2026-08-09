@@ -11,6 +11,20 @@
             %title  Map of #{@state.name} highlighting #{@county.name}
             /* SVG element will be filled using d3.js and a topojson file. */
 
+.row
+  .col-12.col-md-10.offset-md-1
+    %h3.text-center.mt-4
+      Representatives for #{@county.name} County
+    - if @representatives.present?
+      = render 'representatives/table', representatives: @representatives
+    - else
+      %p.text-center
+        No representatives found for this county.
+    .text-center.mb-4
+      = link_to "Back to #{@state.name}",
+                state_map_path(@state.symbol),
+                class: 'btn btn-secondary'
+
 #actionmap-info-box
 
 .d-none#actionmap-info-container{

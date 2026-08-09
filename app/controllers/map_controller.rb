@@ -24,6 +24,10 @@ class MapController < ApplicationController
     handle_county_not_found && return if @county.nil?
 
     @county_details = @state.counties.index_by(&:std_fips_code)
+
+    query = "#{@county.name} County, #{@state.symbol}"
+    data = Representative.geocodio_search(query)
+    @representatives = Representative.civic_api_to_representative_params(data)
   end
 
   private

@@ -61,6 +61,76 @@ describe MapController do
   end
 
   describe 'GET county' do
+    before do
+      allow(Representative).to receive(:geocodio_search)          
+        .and_return({ 'fake' => 'response' })
+      allow(Representative).to receive(:civic_api_to_representative_params)
+        .and_return([])
+    end
+
+
+    # it 'assigns representatives for the requested county' do
+    #   representative = Representative.new(
+    #     name: 'Jane Doe',
+    #     title: 'representative'
+    #   )
+    #   allow(Representative).to receive(:geocodio_search)
+    #     .with('Alameda County, CA')
+    #     .and_return({ 'fake' => 'response' })
+    #   allow(Representative).to receive(:civic_api_to_representative_params)
+    #     .with({ 'fake' => 'response' })
+    #     .and_return([representative])
+    #   get :county,
+    #       params: {
+    #         use_route: '/state/:state_symbol/county/:std_fips_code',
+    #         state_symbol: 'CA',
+    #         std_fips_code: '001'
+    #       }
+    #   expect(assigns(:representatives)).to eq([representative])
+    # end
+    
+    # it 'searches representatives using the county and state' do
+    #   allow(Representative).to receive(:geocodio_search)
+    #     .with('Alameda County, CA')
+    #     .and_return({})
+    #   allow(Representative).to receive(:civic_api_to_representative_params)
+    #     .and_return([])
+    #   get :county,
+    #       params: {
+    #         use_route: '/state/:state_symbol/county/:std_fips_code',
+    #         state_symbol: 'CA',
+    #         std_fips_code: '001'
+    #       }
+    #   expect(Representative).to have_received(:geocodio_search)
+    #     .with('Alameda County, CA')
+    # end
+
+    it 'searches for representatives using the county and state' do
+      get :county,
+          params: {
+            state_symbol: 'CA',
+            std_fips_code: '001'
+          }
+      expect(Representative).to have_received(:geocodio_search)
+        .with('Alameda County, CA')
+    end
+
+    it 'assigns the representatives returned by the representative model' do
+      representative = Representative.new(
+        name: 'Jane Doe',
+        title: 'Representative'
+      )
+      allow(Representative).to receive(:civic_api_to_representative_params)
+        .and_return([representative])
+      get :county,
+          params: {
+            state_symbol: 'CA',
+            std_fips_code: '001'
+          }
+      expect(assigns(:representatives)).to eq([representative])
+    end
+
+
     it 'returns a successful response' do
       get :county,
           params: { use_route: '/state/:state_symbol/county/:std_fips_code', state_symbol: 'CA',
