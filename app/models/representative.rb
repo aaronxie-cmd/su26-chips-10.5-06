@@ -7,6 +7,8 @@
 #  id         :integer          not null, primary key
 #  name       :string
 #  ocdid      :string
+#  party      :string
+#  photo_url  :string
 #  title      :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
@@ -38,18 +40,30 @@ class Representative < ApplicationRecord
       official['name'] = "#{official.dig('bio', 'first_name')} #{official.dig('bio', 'last_name')}"
       title = official['type']
       # Inspect all the data that's there to make part 1 easier.
-      # Rails.logger.debug official
-      # official.dig('bio', 'party')
+      Rails.logger.debug official
+      official.dig('bio', 'party')
       ocdid = official['govtrack_id']
       reps << Representative.find_rep(official, ocdid: ocdid, title: title)
     end
     reps
   end
 
+
+  # def self.find_rep(official, title: '', ocdid: '')
+  #   rep = Representative.create({ name: official['name'], ocdid: ocdid,
+  #     title: title, party: official['party'], photo_url: official['photo_url'] })
+  #   rep.save
+  # end
+  
   def self.find_rep(official, title: '', ocdid: '')
-    rep = Representative.create({ name: official['name'], ocdid: ocdid,
-      title: title, party: official['party'], photo_url: official['photo_url'] })
-    rep.save
+    rep = Representative.find_or_initialize_by(ocdid: ocdid)
+    rep.update(
+      name: official['name'],
+      title: title,
+      party: official['party'],
+      photo_url: official['photo_url']
+    )
+    rep
   end
 
   def update_from_geocodio(official)
