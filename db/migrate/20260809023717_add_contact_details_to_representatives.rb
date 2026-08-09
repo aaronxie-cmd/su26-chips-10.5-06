@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddContactDetailsToRepresentatives < ActiveRecord::Migration[7.2]
   def change
     add_column :representatives, :address, :string

@@ -51,13 +51,12 @@ class Representative < ApplicationRecord
     reps
   end
 
-
   # def self.find_rep(official, title: '', ocdid: '')
   #   rep = Representative.create({ name: official['name'], ocdid: ocdid,
   #     title: title, party: official['party'], photo_url: official['photo_url'] })
   #   rep.save
   # end
-  
+
   def self.find_rep(official, title: '', ocdid: '')
     rep = Representative.find_or_initialize_by(ocdid: ocdid)
     rep.update(
