@@ -1,0 +1,27 @@
+<!-- ai start -->
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-4 text-center">
+      <% if @representative.photo_url.present? %>
+        <img src="<%= @representative.photo_url %>" alt="<%= @representative.name %>" class="img-fluid rounded shadow mb-3" style="max-height: 300px;">
+      <% else %>
+        <div class="bg-secondary text-white p-5 rounded mb-3">No Photo Available</div>
+      <% end %>
+    </div>
+    
+    <div class="col-md-8">
+      <h1><%= @representative.name %></h1>
+      <h4 class="text-muted"><%= @representative.title %></h4>
+      <hr>
+      
+      <p><strong>Party:</strong> <%= @representative.party.presence || "Not Specified" %></p>
+      <p><strong>Address:</strong> <%= @representative.address.presence || "Not Available" %></p>
+      <p><strong>Phone:</strong> <%= @representative.phone.presence || "Not Available" %></p>
+      
+      <% if @representative.url.present? %>
+        <p><strong>Official Website:</strong> <a href="<%= @representative.url %>" target="_blank"><%= @representative.url %></a></p>
+      <% end %>
+    </div>
+  </div>
+</div>
+<!-- ai end -->
