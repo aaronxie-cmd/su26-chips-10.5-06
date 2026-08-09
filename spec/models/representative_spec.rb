@@ -15,40 +15,65 @@
 #  title      :string
 #  zip        :string
 #  created_at :datetime         not null
-#  updated_at :datetime         not null
-#
+
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-# This file is a stub.
-# You should add your own test cases.
-# We recommend creating a file for each model in the database.
+RSpec.describe Representative do
+  describe '.civic_api_to_representative_params' do
+    subject(:process_official_twice) do
+      2.times do
+        described_class.civic_api_to_representative_params(
+          geocodio_response
+        )
+      end
+    end
 
-# RSpec.describe Representative do
-# end
-
-RSpec.describe Representative, type: :model do
-  describe '.find_rep' do
-    let(:sample_official) do
+    let(:geocodio_response) do
       {
-        'name' => 'Jane Doe',
-        'type' => 'representative',
-        'govtrack_id' => '412345',
-        'party' => 'Democrat',
-        'photo_url' => 'https://example.com/photo.jpg'
+        'results' => [
+          {
+            'response' => {
+              'results' => [
+                {
+                  'fields' => {
+                    'congressional_districts' => [
+                      {
+                        'current_legislators' => [
+                          {
+                            'bio' => {
+                              'first_name' => 'Jane',
+                              'last_name'  => 'Doe'
+                            },
+                            'type'        => 'representative',
+                            'govtrack_id' => '412345',
+                            'party'       => 'Democrat',
+                            'photo_url'   => 'https://example.com/photo.jpg'
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
       }
     end
 
-    it 'does not create duplicate representatives when called multiple times for the same person' do
-      # First call / creation
-      rep1 = Representative.find_rep(sample_official, title: 'representative', ocdid: '412345')
-      expect(Representative.count).to eq(1)
+    let(:expected_attributes) do
+      {
+        name:  'Jane Doe',
+      ocdid: '412345',
+      title: 'representative'
+      }
+    end
 
-      # Second call with the same unique identifiers
-      rep2 = Representative.find_rep(sample_official, title: 'representative', ocdid: '412345')
-      
-      # Assertions: Count should remain 1 and it should be the exact same database record ID
-      expect(Representative.count).to eq(1)
-      expect(rep1.id).to eq(rep2.id)
+    it 'does not create a duplicate when the same official is processed twice' do
+      expect { process_official_twice }.to change(described_class, :count).by(1)
+      expect(described_class.find_by(ocdid: '412345')).to have_attributes(expected_attributes)
     end
   end
 end
