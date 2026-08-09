@@ -1,0 +1,33 @@
+{
+  "results": [
+    {
+      "response": {
+        "results": [
+          {
+            "fields": {
+              "congressional_districts": [
+                {
+                  "current_legislators": [
+                    {
+                      "bio": {
+                        "party": "pikachu"
+                      },
+                      "contact": {
+                        "address": "125 pikachu hill, Washington, DC",
+                        "phone": "202-555-1234",
+                        "url": "https://example.com"
+                      },
+                      "references": {
+                        "bioguide_id": "A000001"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
