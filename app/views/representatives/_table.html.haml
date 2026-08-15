@@ -1,5 +1,5 @@
 .table-responsive-md.pt-5
-  %table.table.table-striped.table-hover#events
+  %table.table.table-striped.table-hover#representatives
     %caption Table of Representatives
     %thead.thead-dark
       %tr
@@ -10,12 +10,12 @@
       - representatives.each do |rep|
         %tr
           %th{ scope: 'row' }
-            = rep.name
-            -# BEGIN SOLUTION CS169
-            = link_to(rep.name, representative_path(rep.id))
-            -# END SOLUTION CS169
-          %td= rep.title
+            = link_to rep.name, representative_path(rep)
           %td
-            = link_to representative_news_items_path(rep.id), class: 'btn btn-primary' do
+            = rep.title
+          %td
+            = link_to representative_news_items_path(rep),
+                      class: 'btn btn-primary' do
               %i.fas.fa-newspaper
               News Articles
+              

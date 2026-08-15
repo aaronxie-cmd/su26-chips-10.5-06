@@ -61,39 +61,107 @@ describe MapController do
   end
 
   describe 'GET county' do
+    before do
+      allow(Representative)
+        .to receive(:geocodio_search)
+        .and_return({ 'fake' => 'response' })
+
+      allow(Representative)
+        .to receive(:civic_api_to_representative_params)
+        .and_return([])
+    end
+
     it 'returns a successful response' do
       get :county,
-          params: { use_route: '/state/:state_symbol/county/:std_fips_code', state_symbol: 'CA',
-std_fips_code: '001' }
+          params: {
+            state_symbol: 'CA',
+            std_fips_code: '001'
+          }
+
       expect(response).to be_successful
     end
 
-    it 'assigns @state' do
+    it 'assigns the state' do
       get :county,
-          params: { use_route: '/state/:state_symbol/county/:std_fips_code', state_symbol: 'CA',
-std_fips_code: '001' }
+          params: {
+            state_symbol: 'CA',
+            std_fips_code: '001'
+          }
+
       expect(assigns(:state)).to eq(@california)
     end
 
-    it 'assigns @county' do
+    it 'assigns the county' do
       get :county,
-          params: { use_route: '/state/:state_symbol/county/:std_fips_code', state_symbol: 'CA',
-std_fips_code: '001' }
+          params: {
+            state_symbol: 'CA',
+            std_fips_code: '001'
+          }
+
       expect(assigns(:county)).to eq(@alameda)
     end
 
-    it 'assigns @county_details' do
+    it 'assigns county details' do
       get :county,
-          params: { use_route: '/state/:state_symbol/county/:std_fips_code', state_symbol: 'CA',
-std_fips_code: '001' }
-      expect(assigns(:county_details)).to eq(@california.counties.index_by(&:std_fips_code))
+          params: {
+            state_symbol: 'CA',
+            std_fips_code: '001'
+          }
+
+      expect(assigns(:county_details))
+        .to eq(@california.counties.index_by(&:std_fips_code))
     end
 
-    it 'redirects to home page if invalid state' do
+    it 'searches for representatives using the county and state' do
       get :county,
-          params: { use_route: '/state/:state_symbol/county/:std_fips_code', state_symbol: 'XX',
-std_fips_code: '001' }
-      expect(response).to redirect_to root_path
+          params: {
+            state_symbol: 'CA',
+            std_fips_code: '001'
+          }
+
+      expect(Representative)
+        .to have_received(:geocodio_search)
+        .with('Alameda County, CA')
+    end
+
+    it 'assigns representatives returned by the model' do
+      representative = Representative.new(
+        name: 'Jane Doe',
+        title: 'Representative'
+      )
+
+      allow(Representative)
+        .to receive(:civic_api_to_representative_params)
+        .and_return([representative])
+
+      get :county,
+          params: {
+            state_symbol: 'CA',
+            std_fips_code: '001'
+          }
+
+      expect(assigns(:representatives))
+        .to eq([representative])
+    end
+
+    it 'redirects to the homepage for an invalid state' do
+      get :county,
+          params: {
+            state_symbol: 'XX',
+            std_fips_code: '001'
+          }
+
+      expect(response).to redirect_to(root_path)
+    end
+
+    it 'redirects to the homepage for an invalid county' do
+      get :county,
+          params: {
+            state_symbol: 'CA',
+            std_fips_code: '999'
+          }
+
+      expect(response).to redirect_to(root_path)
     end
   end
 end

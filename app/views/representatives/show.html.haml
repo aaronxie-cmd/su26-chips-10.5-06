@@ -1,4 +1,53 @@
-.container-fluid.bg-light
-  .row.text-center
-    .col-12
-      %h1.text-center= @representative&.name
+.container.py-4
+  .row
+    .col-12.col-lg-8.offset-lg-2
+      .card
+        .card-body
+          %h1.card-title.text-center
+            = @representative.name
+
+          .text-center.mb-4
+            - if @representative.photo_url.present?
+              = image_tag @representative.photo_url,
+                          alt: "Portrait of #{@representative.name}",
+                          class: 'img-fluid rounded',
+                          style: 'max-height: 300px;'
+            - else
+              %p.text-muted
+                Photo not available.
+
+          %dl.row
+            %dt.col-sm-4 Office
+            %dd.col-sm-8
+              = @representative.title.presence || 'Not available'
+
+            %dt.col-sm-4 Party
+            %dd.col-sm-8
+              = @representative.party.presence || 'Not available'
+
+            %dt.col-sm-4 Address
+            %dd.col-sm-8
+              = @representative.address.presence || 'Not available'
+
+            %dt.col-sm-4 Phone
+            %dd.col-sm-8
+              = @representative.phone_number.presence || 'Not available'
+
+            %dt.col-sm-4 Website
+            %dd.col-sm-8
+              - if @representative.website_url.present?
+                = link_to @representative.website_url,
+                          @representative.website_url,
+                          target: '_blank',
+                          rel: 'noopener'
+              - else
+                Not available
+
+          .d-flex.justify-content-center.gap-2.mt-4
+            = link_to 'News Articles',
+                      representative_news_items_path(@representative),
+                      class: 'btn btn-primary'
+
+            = link_to 'Back to Representatives',
+                      representatives_path,
+                      class: 'btn btn-secondary'
