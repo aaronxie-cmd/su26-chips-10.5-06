@@ -13,7 +13,9 @@ SimpleCov::Formatter::LcovFormatter.config do |c|
 end
 
 SimpleCov.start 'rails' do
+  add_filter 'lib'
   command_name 'rspec'
+
 
   ## CS169: You may want to modify some of the testing configuration.
 
@@ -35,6 +37,9 @@ require File.expand_path('../config/environment', __dir__)
 # Prevent database truncation if the environment is production
 abort('The Rails environment is running in production mode!') if Rails.env.production?
 require 'rspec/rails'
+
+require 'webmock/rspec'
+WebMock.disable_net_connect!(allow_localhost: true)
 # Add additional requires below this line. Rails is not loaded until this point!
 
 # Requires supporting ruby files with custom matchers and macros, etc, in

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_10_05_053024) do
+ActiveRecord::Schema[7.2].define(version: 2026_08_15_042456) do
   create_table "counties", force: :cascade do |t|
     t.string "name", null: false
     t.integer "state_id", null: false
@@ -48,6 +48,11 @@ ActiveRecord::Schema[7.2].define(version: 2025_10_05_053024) do
     t.datetime "updated_at", null: false
     t.string "ocdid"
     t.string "title"
+    t.string "address"
+    t.string "party"
+    t.string "photo_url"
+    t.string "website_url"
+    t.string "phone_number"
   end
 
   create_table "states", force: :cascade do |t|

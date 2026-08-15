@@ -29,6 +29,16 @@ Scenario: The Representatives Page
 ## CHIPS 10.5 -- add iteration 1/2 additional pages here.
 ## You may want to set up conditions like searching for data, etc.
 
+@a11y
+Scenario: The State Map Page
+    Given I visit the state page for "CA"
+    Then the page should be axe clean
+
+@a11y
+Scenario: The County Page
+    Given I visit the county page for "CA" with FIPS code "001"
+    Then the page should be axe clean
+
 ## CS169: Add the first page here.
 # Be sure to tag the Scenario with @a11y
 # @a11y

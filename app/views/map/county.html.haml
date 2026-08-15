@@ -1,7 +1,7 @@
 .row
   .col-12
     %section.my-4
-      %h2.text-center
+      %h1.text-center
         #{@county.name}, #{@state.symbol}
       .overflow-hidden.bg-light.text-center.mb-3
         .overflow-auto.py-3
@@ -9,11 +9,11 @@
             version: 1.1, xmlns: 'http://www.w3.org/2000/svg'
           }
             %title  Map of #{@state.name} highlighting #{@county.name}
-            /* SVG element will be filled using d3.js and a topojson file. */
+            / SVG element will be filled using d3.js and a topojson file.
 
 .row
   .col-12.col-md-10.offset-md-1
-    %h3.text-center.mt-4
+    %h2.text-center.mt-4
       Representatives for #{@county.name} County
     - if @representatives.present?
       = render 'representatives/table', representatives: @representatives
